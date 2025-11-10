@@ -1,0 +1,31 @@
+# .gitignore for RAG Application
+
+# Environment variables
+.env
+
+# Dependencies
+node_modules/
+
+# LanceDB database
+lancedb/
+
+# Temporary extracted images
+temp_images/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# PDF files (optional - remove this if you want to commit PDFs)
+# data/*.pdf
