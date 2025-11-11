@@ -1,135 +1,207 @@
-# Agenda Sharing – RAG Architecture & Best Practices
-
-## 1. Mở đầu & Mục tiêu buổi chia sẻ
-- **Thời lượng**: 5 phút
-- **Nội dung**:
-  - Giới thiệu bối cảnh AI trong dự án
-  - Lý do team cần RAG
-  - Mục tiêu: Hiểu và áp dụng RAG vào hệ thống của mình
-- **Hoạt động**:  
-  - Câu hỏi mở: “Theo bạn, LLM hiện tại có thể trả lời về dữ liệu *private* của công ty không? Vì sao cần RAG?”
+# RAG Architecture & Best Practices
+*A comprehensive guide to Retrieval-Augmented Generation*
 
 ---
 
-## 2. RAG là gì? Tổng quan về các Phase
-- **Thời lượng**: 10 phút
-- **Nội dung**:
-  - Khái niệm RAG = **Retrieval + Augmented + Generation**
-  - 4 Phase chính:
-    1. **Indexing**
-    2. **Retrieval**
-    3. **Augmented**
-    4. **Generation**
-  - Minh họa pipeline tổng quan (flow từ User → LLM)
-- **Hoạt động**:
-  - Vẽ sơ đồ pipeline trên bảng / slide
-  - Trích dẫn case thực tế: *chatbot tài liệu nội bộ*
+## Processing Internal Data with RAG
+### Solving Traditional LLM Limitations
 
-![alt text](image-2.png)
+**Key LLM Challenges:**
+- No knowledge of internal/organizational data
+- Hallucination - generating fabricated information
+- Inability to update knowledge with new information
+- Lack of specialized domain context
+
+**→ The Need for RAG (Retrieval-Augmented Generation)**
 
 ---
 
-## 3. Dive Deep into Each Phase
+## CORE FOUNDATION: EMBEDDING & VECTOR DATABASE
+
+![alt text](image-9.png)
+
+### Embedding
+- Vectorization of text data
+- Semantic conversion to numerical representations
+- Contextual information encoding
+
+> Vectors: A list of numbers representing the meaning of words.
+
+> Embeddings: A process of converting raw data into a form that can measure the similarity while reducing the size of the data.
+
+
+### Vector Database
+- Storage and management of embeddings
+- Similarity-based searching
+- Cosine Similarity, Euclidean Distance metrics
+- Foundation for Semantic Search & RAG systems
+
+![alt text](image-10.png)
+
+
+---
+
+## WHAT IS RAG?
+### Retrieval-Augmented Generation
+
+**Core Pipeline:**
+
+![RAG Pipeline Overview](image-2.png)
+- **RAG Concept** = **Retrieval + Augmented + Generation**
+  - 4 Main Phases:
+    1. **Indexing** - Initialize Base Knowledge
+    2. **Retrieval** - Find relevant information
+    3. **Augmented** - Enhance prompt with context
+    4. **Generation** - LLM generates response
+
+- **How It Works**:
+  - Combines search capabilities + language generation power
+  - Real-world use case: *internal documentation chatbot*
+
+![RAG Architecture Patterns](image-6.png)
+
+---
+
+## KEY PHASES IN RAG ARCHITECTURE
 
 ### 3.1 Indexing Phase
-- **Thời lượng**: 10 phút
-- **Nội dung**:
-  - Trích xuất dữ liệu (PDF, HTML, API)
-  - Chunking hợp lý
-  - Tạo embedding
-  - Lưu vào VectorDB
-- **Demo code**: index dữ liệu vào LanceDB duyệt bằng JavaScript.
-![alt text](image.png)
+- **Process**:
+  - Data extraction (PDF, HTML, API sources)
+  - Optimal chunking (OCR - Optical Character Recognition)
+  - Embedding generation
+  - VectorDB storage
+- **Demo Code**: Indexing data into LanceDB
+![Indexing Phase](image.png)
 
 ### 3.2 Retrieval Phase
-- **Thời lượng**: 10 phút
-- **Nội dung**:
+- **Process**:
   - Query → Embedding → Vector search
-  - Các metric similarity (Cosine, Euclidean)
-  - TopK và filtering
-- **Demo code**: search câu hỏi → trả về chunks
-![alt text](image-3.png)
+  - Similarity metrics (Cosine, Euclidean)
+  - TopK and filtering strategies
+- **Demo Code**: Search queries → return relevant chunks
+![Retrieval Phase](image-3.png)
 
 ### 3.3 Augmented Phase
-- **Thời lượng**: 5 phút
-- **Nội dung**:
-  - Ghép context + query thành prompt
-  - Kỹ thuật formatting prompt
-- **Hoạt động**: So sánh prompt “trần” vs prompt có context đầy đủ
-![alt text](image-4.png)
+- **Process**:
+  - Combine context + query into enhanced prompt
+  - Prompt formatting techniques
+- **Comparison**: Basic prompt vs. context-enriched prompt
+![Augmented Phase](image-4.png)
 
 ### 3.4 Generation Phase
-- **Thời lượng**: 5 phút
-- **Nội dung**:
-  - Feed prompt vào LLM
-  - Cấu hình model (temperature, system role)
-- **Demo code**: Sinh câu trả lời từ context
-![alt text](image-5.png)
+- **Process**:
+  - Feed enhanced prompt to LLM
+  - Model configuration (temperature, system role)
+- **Demo Code**: Generate responses from context
+![Generation Phase](image-5.png)
 
 ---
 
-## 4. Các Kiến trúc RAG phổ biến
-- **Thời lượng**: 15 phút
-- **Nội dung**:
-  - 8 kiến trúc trong hình minh họa:
-    1. Naive RAG
-    2. Multimodal RAG
-    3. HyDE
-    4. Corrective RAG
-    5. Graph RAG
-    6. Hybrid RAG
-    7. Adaptive RAG
-    8. Agentic RAG
-  - Mô tả ưu / nhược điểm
-  - Mapping theo nhóm nguyên lý (single-shot, multi-shot, hybrid)
+## RAG Architecture Patterns
 
-  ![alt text](image-1.png)
-- **Hoạt động**:
-  - Case study: Chọn kiến trúc phù hợp cho dự án team đang làm
+**8 Key Architecture Patterns:**
+1. **Naive RAG** - Basic retrieval and generation
+2. **Multimodal RAG** - Handles multiple data types
+3. **HyDE** - Hypothetical Document Embeddings
+4. **Corrective RAG** - Self-correcting mechanisms
+5. **Graph RAG** - Knowledge graph integration
+6. **Hybrid RAG** - Combined retrieval methods
+7. **Adaptive RAG** - Dynamic strategy selection
+8. **Agentic RAG** - Autonomous agent integration
+![RAG Architecture Patterns](image-1.png)
 
----
-
-## 5. Best Practices & Pitfalls
-- **Thời lượng**: 10 phút
-- **Nội dung**:
-  - Chunking và TopK tuning
-  - Lựa chọn model embedding
-  - Metadata filtering trong VectorDB
-  - Giới hạn token & context trimming
-- **Hoạt động**:
-  - Checklist: triển khai RAG cho dự án
+**Analysis:**
+- Advantages and limitations of each approach
+- Mapping to principle groups (single-shot, multi-shot, hybrid)
+- Use case recommendations
 
 ---
 
-## 6. Demo Mini Project
-- **Thời lượng**: 15 phút
-- **Nội dung**:
-  - Mini pipeline: Index + Retrieval + Augment + Generation
-  - JavaScript + OpenAI + LanceDB
-- **Hoạt động**:
-  - Cùng team chạy script
-  - Thử thay đổi query / TopK / prompt và quan sát kết quả khác biệt
+## DEMO: TUTORIAL CHATBOT WITH RAG
+
+### Scenario
+- Internal guide support chatbot
+- Data source: Tutorial documents
+- Sample query: "How to create resources?"
+
+### Pipeline Execution:
+1. **Indexing**: Document chunking → embedding → VectorDB
+2. **Retrieval**: Find relevant tutorial content
+3. **Augmented**: Enhance with authentication context
+4. **Generation**: LLM provides detailed response
 
 ---
 
-## 7. Q&A + Định hướng áp dụng
-- **Thời lượng**: 10 phút
-- **Nội dung**:
-  - Giải đáp thắc mắc của team
-  - Xác định kiến trúc RAG phù hợp cho dự án`
-  - Next steps: PoC → MVP → Production
+## BEST PRACTICES & COMMON PITFALLS
+
+### Key Considerations:
+- **Chunking Strategy & TopK Tuning**
+  - Optimal chunk sizes for different content types
+  - TopK parameter optimization
+
+- **Model Selection**
+  - Choosing appropriate embedding models
+  - LLM selection based on use case
+
+- **VectorDB Optimization**
+  - Metadata filtering strategies
+  - Efficient indexing and querying
+
+- **Performance Management**
+  - Token limits and context window optimization
+  - Context trimming techniques
+
+### Implementation Checklist:
+- [ ] Define chunking strategy
+- [ ] Select embedding model
+- [ ] Configure VectorDB metadata
+- [ ] Optimize TopK parameters
+- [ ] Implement prompt templates
+- [ ] Set up monitoring and evaluation
 
 ---
 
-## 📦 Tài liệu & Chuẩn bị trước buổi
-- Slide pipeline RAG
-- OCR là gì?
-- Sơ đồ 8 kiến trúc RAG (từ hình minh hoạ)
-- Demo code Naive RAG + Corrective RAG
-- Tài liệu tóm tắt VectorDB vs GraphDB
-- Checklist cấu hình RAG cho dự án
+## MINI PROJECT DEMONSTRATION
+
+### Technical Stack:
+- **Mini Pipeline**: Index + Retrieval + Augment + Generation
+- **Technology**: JavaScript + OpenAI + LanceDB
+- **Local Setup**: LMstudio for local LLM/Embedding
+
+### Workshop Activities:
+- Team script execution session
+- Experiment with parameter variations:
+  - Query modifications
+  - TopK adjustments
+  - Prompt template changes
+- Observe and analyze result differences
 
 ---
 
-## 💡 Mẹo chia sẻ hiệu quả
-- Updating ....
+## Next Steps & Application
+
+### Discussion Topics:
+- Team questions and technical clarifications
+- Identifying suitable RAG architecture for your project
+- Resource planning and technical requirements
+
+### Implementation Pathway:
+1. **Proof of Concept** → **MVP** → **Production**
+2. **Evaluation Criteria**: Performance, accuracy, scalability
+3. **Success Metrics**: Response quality, user satisfaction, efficiency
+
+---
+
+## Q&A
+
+### Reference Materials:
+- [Vector Database Fundamentals](https://200lab.io/blog/vector-database-la-gi)
+- [RAG Comprehensive Guide](https://200lab.io/blog/rag-la-gi)
+
+### Additional Resources:
+- Code repositories and documentation
+- Performance benchmarking tools
+- Community forums and support channels
+
+## Thank You!
+*Let's build intelligent, context-aware applications together!*
