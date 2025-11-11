@@ -197,6 +197,9 @@
 ### Reference Materials:
 - [Vector Database Fundamentals](https://200lab.io/blog/vector-database-la-gi)
 - [RAG Comprehensive Guide](https://200lab.io/blog/rag-la-gi)
+- [Retrieval Augmented Generation (RAG) in Azure AI Search](https://learn.microsoft.com/en-us/azure/search/retrieval-augmented-generation-overview?tabs=docs)
+- [8 Retrieval Augmented Generation](https://humanloop.com/blog/rag-architectures)
+- [OCR - Optical Character Recognition](https://learn.microsoft.com/en-us/azure/ai-services/computer-vision/overview-ocr)
 
 ### Additional Resources:
 - Code repositories and documentation
